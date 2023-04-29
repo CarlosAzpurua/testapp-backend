@@ -6,15 +6,15 @@
   "scripts": {
     "dev": "nodemon ./src/index.js",
     "start": "node ./src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./node_modules/.bin/mocha --watch"
   },
   "keywords": [],
   "author": "Carlos Azpúrua <carlosazpurua1@gmail.com> (https://github.com/CarlosAzpurua)",
   "license": "MIT",
   "devDependencies": {
     "chai-as-promised": "^7.1.1",
-    "mocha": "^10.2.0",
-    "nodemon": "^2.0.22"
+    "mocha": "*",
+    "nodemon": "*"
   },
   "dependencies": {
     "axios": "^1.4.0",

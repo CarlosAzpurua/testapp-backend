@@ -1,7 +1,10 @@
-import BadRequestError from "./BadRequestError";
-
-export default class EntityNotFoundError extends BadRequestError {
-    constructor(message = 'Entity not found') {
-        super(message)
+const strings = require('../shared/Constants')
+class EntityNotFoundError {
+    constructor(message = strings.notFound) {
+        message
     }
+}
+
+module.exports = {
+    EntityNotFoundError
 }

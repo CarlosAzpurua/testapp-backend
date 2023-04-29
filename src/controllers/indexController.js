@@ -16,7 +16,6 @@ const getOneFile = async (req, res) => {
         return;
     }
 
-
     const file = await indexServices.file(fileId);
 
     res.status(201).send(file);

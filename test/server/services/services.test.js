@@ -58,7 +58,7 @@ describe('Services with mocks', async () => {
     })
 
     describe('formatFile', () => {
-        it.only('should correctly format a string into an object', () => {
+        it('should correctly format a string into an object', () => {
             //Arrange
             const testingString = "file,text,number,hex test2.csv,aTUxU\n test2.csv,HQGXmYaBqjbrLrdPDMXwSeNLXakF,26814495,776fa19e97275585c22ac0427e65232e";
             const expected = {

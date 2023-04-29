@@ -2,7 +2,6 @@ const { expect } = require('chai')
 const services = require('../../../src/services/indexServices')
 const _  = require('lodash')
 const strings = require('../../../src/shared/Constants')
-const EntityNotFoundError = require('../../../src/error/EntityNotFoundError')
 
 describe('Services with mocks', async () => {
 
@@ -14,7 +13,7 @@ describe('Services with mocks', async () => {
             // Act 
             const file = await services.file(nonExistingFileId)
             
-            const expected = {message: strings.error, error, status: 404}
+            const expected = {message: strings.error, status: 404}
 
             //Assert 
             expect(() => file.to.be.equal(expected))
@@ -36,29 +35,6 @@ describe('Services with mocks', async () => {
         })
     })
 
-    describe('findAll', () => {
-        // it('should return error because doesnt need a id', async () => {
-        //     //Arrange 
-        //     const existingFileId = 'test2.csv';
-
-        //     // Act 
-        //     const files = await services.allFiles(existingFileId)
-            
-        //     //Assert 
-        //     expect(() => files.to.throw(EntityNotFoundError))
-        // })
-
-        // it('should return every file', async () => {
-        //     // Arrange & Act 
-        //     const files = await services.allFiles()
-            
-        //     console.log(files, 'this is files')
-
-        //     //Assert 
-        //     expect(() => files.to.throw(BadRequestError))
-        // })
-    })
-
     describe('formatFile', () => {
         it('should correctly format a string into an object', () => {
             //Arrange
@@ -73,7 +49,7 @@ describe('Services with mocks', async () => {
             //Act    
             const fileToCheck = services.formatFile(testingString)          
 
-            //Act & Assert 
+            //Assert 
             expect(fileToCheck).to.deep.equal(expected);
         });
           
@@ -90,7 +66,7 @@ describe('Services with mocks', async () => {
             //Act    
             const fileToCheck = services.formatFile(blankString)          
 
-            //Act & Assert 
+            //Assert 
             expect(fileToCheck).to.deep.equal(emptyExpected);
         });
           

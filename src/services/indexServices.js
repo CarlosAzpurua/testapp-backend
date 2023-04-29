@@ -3,8 +3,8 @@ const _  = require('lodash');
 const strings = require('../shared/Constants')
 
 const headers = {
-    'Authorization': process.env.SECRET_KEY,
-    'Content-Type': 'application/json'
+  'Authorization': process.env.SECRET_KEY,
+  'Content-Type': 'application/json'
 };
 
 const allFiles = async () => {
@@ -14,7 +14,7 @@ const allFiles = async () => {
         return response.data;
     })
     .catch(error => {
-      throw new Error(strings.error, error);
+      return {message: strings.error, error, status: 404}
     })
     
     return allFiles

@@ -32,14 +32,15 @@ const formatFile = (strToFormat) => {
 
   rows.forEach((row, index) => {
     const values = row.split(',').map(_.trim);
-    console.log(index, "this is values 0", values[0])
     if(index === 0) return;
 
+    
+
     // Check value or add a null
-    result.file.push(values[0] || null);
-    result.text.push(values[1] || null);
-    result.number.push(_.isNaN(Number(values[2])) ? null : values[2]);
-    result.hex.push(values[3] || null);
+    result.file.push(_.isEmpty(values[0]) ? null : values[0]);
+    result.text.push(_.isEmpty(values[1]) ? null : values[1]);
+    result.number.push(_.isEmpty(values[2]) ? null : _.isNaN(Number(values[2])) ? null : values[2]);
+    result.hex.push(_.isEmpty(values[3]) ? null : values[3]);
 
     // Add null if blank value
     while (result.file.length < result.text.length) {
@@ -63,10 +64,10 @@ const file = async (fileId) => {
         return response.data;
     })
     .catch(error => {
-      console.error(error)
+      return {message: strings.error, error, status: 404}
   })
   
-  if(!file) return {message: strings.error};
+  if(file.error && file.message && file.status === 404) return file
 
   return formatFile(file)
 }

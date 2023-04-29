@@ -34,8 +34,6 @@ const formatFile = (strToFormat) => {
     const values = row.split(',').map(_.trim);
     if(index === 0) return;
 
-    
-
     // Check value or add a null
     result.file.push(_.isEmpty(values[0]) ? null : values[0]);
     result.text.push(_.isEmpty(values[1]) ? null : values[1]);
@@ -64,7 +62,7 @@ const file = async (fileId) => {
         return response.data;
     })
     .catch(error => {
-      return {message: strings.error, error, status: 404}
+      return { message: strings.error, error, status: 404 }
   })
   
   if(file.error && file.message && file.status === 404) return file

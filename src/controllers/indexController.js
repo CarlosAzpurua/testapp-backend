@@ -1,6 +1,6 @@
 const indexServices = require("../services/indexServices")
 
-const getAllFiles = async (req,res) => {
+const getAllFiles = async (_req, res) => {
     const allFiles = await indexServices.allFiles()
 
     res.status(201).send(allFiles)
@@ -8,13 +8,9 @@ const getAllFiles = async (req,res) => {
 
 const getOneFile = async (req, res) => {
 
-    const {
-        params: { fileId }
-    } = req;
+    const { fileId } = req.params;
 
-    if(!fileId) {
-        return;
-    }
+    if(!fileId) return;
 
     const file = await indexServices.file(fileId);
 

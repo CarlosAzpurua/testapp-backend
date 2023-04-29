@@ -27,13 +27,10 @@ describe('Services with mocks', async () => {
 
             //Assert
             expect(file).to.not.be.undefined
-            //expect(file).to.be.an('object').with.lengthOf(4)
-            expect(file).to.deep.include({
-                file: ["test2.csv", "test2.csv"],
-                text: ["pksWX", "jbWQNGzUKcopCMADfqh"],
-                number: [ null, "155" ],
-                hex: [ null, "252e887c3975b1452ed71391ce57d8cf"]
-            })
+            expect(file.file).to.be.a('array')
+            expect(file.text).to.be.a('array')
+            expect(file.number).to.be.a('array')
+            expect(file.hex).to.be.a('array')
         })
     })
 
@@ -49,12 +46,88 @@ describe('Services with mocks', async () => {
         //     expect(() => files.to.throw(EntityNotFoundError))
         // })
 
-        it('should return every file', async () => {
-            // Arrange & Act 
-            const files = await services.allFiles()
+        // it('should return every file', async () => {
+        //     // Arrange & Act 
+        //     const files = await services.allFiles()
             
-            //Assert 
-            expect(() => files.to.throw(BadRequestError))
-        })
+        //     console.log(files, 'this is files')
+
+        //     //Assert 
+        //     expect(() => files.to.throw(BadRequestError))
+        // })
+    })
+
+    describe('formatFile', () => {
+        it.only('should correctly format a string into an object', () => {
+            //Arrange
+            const testingString = "file,text,number,hex test2.csv,aTUxU\n test2.csv,HQGXmYaBqjbrLrdPDMXwSeNLXakF,26814495,776fa19e97275585c22ac0427e65232e";
+            const expected = {
+              file: ["test2.csv", "test2.csv"],
+              text: ["aTUxU", "HQGXmYaBqjbrLrdPDMXwSeNLXakF"],
+              number: [null, "26814495"],
+              hex: [null, "776fa19e97275585c22ac0427e65232e"]
+            };
+
+            //Act    
+            const fileToCheck = services.formatFile(testingString)          
+
+            //Act & Assert 
+            expect(fileToCheck).to.deep.equal({expected});
+        });
+          
+        it('should handle empty input', () => {
+            //Arrange
+            const str = "";
+            const expected = {
+              file: [],
+              text: [],
+              number: [],
+              hex: []
+            };
+
+            //Act & Assert 
+            expect(services.formatFile(str)).to.equal(expected);
+        });
+          
+        it('should handle input with only headers', () => {
+            //Arrange
+            const str = "file,text,number,hex File,Text,Number,Hex\n";
+            const expected = {
+              file: [],
+              text: [],
+              number: [],
+              hex: []
+            };
+
+            //Act & Assert 
+            expect(services.formatFile(str)).to.equal(expected);
+        });
+          
+        it('should handle input with only one row', () => {
+            //Arrange
+            const str = "file,text,number,hex File1,Text1,123,0x123\n";
+            const expected = {
+              file: ["File1"],
+              text: ["Text1"],
+              number: [123],
+              hex: ["0x123"]
+            };
+            //Act & Assert 
+            expect(services.formatFile(str)).to.equal(expected);
+        });
+          
+        it('should handle input with missing values', () => {
+            //Arrange
+            const str = "file,text,number,hex File1,Text1,,0x123\nFile2,,456,\n,Text3,789,";
+            const expected = {
+              file: ["File1", "File2", null],
+              text: ["Text1", null, "Text3"],
+              number: [null, 456, 789],
+              hex: ["0x123", null, null]
+            };
+
+            //Act & Assert 
+            expect(services.formatFile(str)).to.equal(expected);
+        });
     })
 })

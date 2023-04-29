@@ -1,6 +1,8 @@
+const strings = require('../shared/Constants')
+
 class BadRequestError {
-    constructor(message, data) {
-        super({ code: 400, message, data})
+    constructor(message = strings.error) { 
+        message
     }
 }
 

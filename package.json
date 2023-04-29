@@ -11,6 +11,12 @@
   "keywords": [],
   "author": "Carlos Azpúrua <carlosazpurua1@gmail.com> (https://github.com/CarlosAzpurua)",
   "license": "MIT",
+  "jest": {
+    "verbose": true,
+    "moduleNameMapper": {
+      "^lodash-es$": "lodash"
+    }
+  },
   "devDependencies": {
     "chai-as-promised": "^7.1.1",
     "mocha": "*",
@@ -20,6 +26,7 @@
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21"
   }
 }

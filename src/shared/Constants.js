@@ -1,7 +1,10 @@
 
 const strings = {
-    error: "The resource you're trying to access is not currently available in our database. We recommend checking our site for similar resources or contacting our support team for further assistance.",
-    notFound: 'Entity not found'
+    error: "An error occurred.",
+    notFound: 'Entity not found.',
+    errorRequest: "No response received from server.",
+    errorResponse: "Failed to retrieve files.",
+    errorServer: "Internal server error"
 }
 
 module.exports = { ...strings }

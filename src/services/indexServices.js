@@ -2,22 +2,25 @@ const axios = require('axios');
 const _  = require('lodash');
 const strings = require('../shared/Constants')
 
+const API_URL = "https://echo-serv.tbxnet.com/v1/secret";
+
 const headers = {
   'Authorization': process.env.SECRET_KEY,
   'Content-Type': 'application/json'
 };
 
 const allFiles = async () => {
-
-    const allFiles = await axios.get("https://echo-serv.tbxnet.com/v1/secret/files", { headers })
-    .then(response => {
-        return response.data;
-    })
-    .catch(error => {
-      return {message: strings.error, error, status: 404}
-    })
-    
-    return allFiles
+  try {
+    return await axios.get(API_URL + "/files", { headers }).then(response => response.data);
+  } catch (error) {
+    if(error.response){
+      return {message: strings.errorResponse, error, status: error.response.status}
+    } else if (error.request) {
+      return {message: strings.errorRequest, error, status: 500}
+    } else {
+      return {message: strings.error, error, status: 500}
+    }
+  }
 }
 
 const formatFile = (strToFormat) => {
@@ -30,8 +33,9 @@ const formatFile = (strToFormat) => {
     hex: []
   };
 
-  rows.forEach((row, index) => {
-    const values = row.split(',').map(_.trim);
+  for(let i=1; i < rows.length; i++) {
+    const row = rows[1]
+    const values = row.split(',').map(_.trim)
     if(index === 0) return;
 
     // Check value or add a null
@@ -50,14 +54,14 @@ const formatFile = (strToFormat) => {
     while (result.file.length < result.hex.length) {
       result.file.push(null);
     }
-  });
+  }
 
   return result;
 }
 
 const file = async (fileId) => {
 
-  const file = await axios.get(`https://echo-serv.tbxnet.com/v1/secret/file/${fileId}`, { headers })
+  const file = await axios.get(API_URL + `/file/${fileId}`, { headers })
     .then(response => {
         return response.data;
     })

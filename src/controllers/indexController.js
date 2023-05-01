@@ -1,9 +1,14 @@
-const indexServices = require("../services/indexServices")
-
+const {allFiles, file} = require("../services/indexServices")
+const strings = require('../shared/Constants')
 const getAllFiles = async (_req, res) => {
-    const allFiles = await indexServices.allFiles()
+    try {
+        const response = await allFiles()
+        res.status(200).send(response)
 
-    res.status(201).send(allFiles)
+    } catch (error) {
+        console.error(error)
+        res.status(500).send(strings.errorServer)
+    }
 }
 
 const getOneFile = async (req, res) => {
@@ -12,9 +17,9 @@ const getOneFile = async (req, res) => {
 
     if(!fileId) return;
 
-    const file = await indexServices.file(fileId);
+    const response = await file(fileId);
 
-    res.status(201).send(file);
+    res.status(201).send(response);
 }
 
 module.exports = {

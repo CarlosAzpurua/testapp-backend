@@ -36,9 +36,9 @@ describe('Services with mocks', async () => {
     })
 
     describe('formatFile', () => {
-        it('should correctly format a string into an object', () => {
+        it('should return an object formatted with valid input', () => {
             //Arrange
-            const testingString = "file,text,number,hex\n test2.csv,aTUxU\n test2.csv,HQGXmYaBqjbrLrdPDMXwSeNLXakF,26814495,776fa19e97275585c22ac0427e65232e";
+            const input = "file,text,number,hex\n test2.csv,aTUxU\n test2.csv,HQGXmYaBqjbrLrdPDMXwSeNLXakF,26814495,776fa19e97275585c22ac0427e65232e";
             const expected = {
               file: ["test2.csv", "test2.csv"],
               text: ["aTUxU", "HQGXmYaBqjbrLrdPDMXwSeNLXakF"],
@@ -47,7 +47,7 @@ describe('Services with mocks', async () => {
             };
 
             //Act    
-            const fileToCheck = services.formatFile(testingString)          
+            const fileToCheck = services.formatFile(input)          
 
             //Assert 
             expect(fileToCheck).to.deep.equal(expected);
@@ -82,6 +82,17 @@ describe('Services with mocks', async () => {
 
             //Act & Assert 
             expect(services.formatFile(str)).to.deep.equal(expected);
+        });
+
+        it("test_format_file_with_empty_input", () => {
+            const input = "";
+            const expectedOutput = {
+                file: [],
+                text: [],
+                number: [],
+                hex: []
+            };
+            expect(formatFile(input)).to.equal(expectedOutput);
         });
           
         it('should handle input with missing values', () => {

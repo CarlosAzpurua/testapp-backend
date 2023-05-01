@@ -84,7 +84,7 @@ describe('Services with mocks', async () => {
             expect(services.formatFile(str)).to.deep.equal(expected);
         });
 
-        it("test_format_file_with_empty_input", () => {
+        it("should handle with empty input and return a object", () => {
             const input = "";
             const expectedOutput = {
                 file: [],
@@ -92,7 +92,7 @@ describe('Services with mocks', async () => {
                 number: [],
                 hex: []
             };
-            expect(formatFile(input)).to.equal(expectedOutput);
+            expect(services.formatFile(input)).to.deep.equal(expectedOutput);
         });
           
         it('should handle input with missing values', () => {

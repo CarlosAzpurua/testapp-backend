@@ -24,8 +24,6 @@ const allFiles = async () => {
 }
 
 const formatFile = (strToFormat) => {
-  const rows = strToFormat.split('\n');
-
   const result = {
     file: [],
     text: [],
@@ -33,45 +31,40 @@ const formatFile = (strToFormat) => {
     hex: []
   };
 
-  for(let i=1; i < rows.length; i++) {
-    const row = rows[1]
-    const values = row.split(',').map(_.trim)
-    if(index === 0) return;
+  if(_.isEmpty(strToFormat)) return result
 
-    // Check value or add a null
-    result.file.push(_.isEmpty(values[0]) ? null : values[0]);
-    result.text.push(_.isEmpty(values[1]) ? null : values[1]);
-    result.number.push(_.isEmpty(values[2]) ? null : _.isNaN(Number(values[2])) ? null : values[2]);
-    result.hex.push(_.isEmpty(values[3]) ? null : values[3]);
+  const rows = strToFormat.split('\n');
 
-    // Add null if blank value
-    while (result.file.length < result.text.length) {
-      result.file.push(null);
-    }
-    while (result.file.length < result.number.length) {
-      result.file.push(null);
-    }
-    while (result.file.length < result.hex.length) {
-      result.file.push(null);
-    }
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const [file, text, number, hex] = row.split(',').map(_.trim);
+     // Check value or add a null
+     result.file.push(_.isEmpty(file) ? null : file);
+     result.text.push(_.isEmpty(text) ? null : text);
+     result.number.push(_.isEmpty(number) ? null : _.isNaN(Number(number)) ? null : number);
+     result.hex.push(_.isEmpty(hex) ? null : hex);
+ 
+     // Add null if blank value
+     const addNulls = (arr1, arr2) => {
+       while (arr1.length < arr2.length) {
+         arr1.push(null);
+       }
+     };
+     addNulls(result.file, result.text);
+     addNulls(result.file, result.number);
+     addNulls(result.file, result.hex);
   }
 
   return result;
 }
 
 const file = async (fileId) => {
-
-  const file = await axios.get(API_URL + `/file/${fileId}`, { headers })
-    .then(response => {
-        return response.data;
-    })
-    .catch(error => {
-      return { message: strings.error, error, status: 404 }
-  })
-  
-  if(file.error && file.message && file.status === 404) return file
-
-  return formatFile(file)
+  try{
+    const file = await axios.get(`${API_URL}/file/${fileId}`, { headers })
+    return formatFile(file.data)
+  } catch (error) {
+    return { message: strings.error, error, status: 404 }
+  }
 }
 
 module.exports = {

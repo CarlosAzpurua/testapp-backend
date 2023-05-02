@@ -1,4 +1,4 @@
-# Test App Backend
+# Backend Challenge - Test App
 
 This project is the backend portion of a challenge developed to test various tools and skills, including practical use of Node.js (developed in Node 14), JavaScript (ES6+), Express, Mocha, and Chai. 
 

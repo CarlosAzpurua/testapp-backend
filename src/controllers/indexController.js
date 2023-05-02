@@ -3,7 +3,7 @@ const strings = require('../shared/Constants')
 const getAllFiles = async (_req, res) => {
     try {
         const response = await allFiles()
-        res.status(200).send(response)
+        return res.status(200).send(response)
 
     } catch (error) {
         console.error(error)

@@ -6,9 +6,25 @@ This project is the backend portion of a challenge developed to test various too
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+### Prerequisites
+To be able to run the application, make sure you have Node.js installed on your machine. 
+
+### Installation
+1. First, clone the repository:
+```
+git clone https://github.com/CarlosAzpurua/testapp-backend.git
+
+# cd into the new directory
+cd ./testapp-backend
+
+# create a `.env` file by copying contents from `.env.example`
+cp .env.example .env
+
+```
+
 ### Installation 🔧
 
-To start all processes, functionalities, and tests, we will need to install some libraries beforehand. Run the following command to install the necessary libraries:
+2. To start all processes, functionalities, and tests, we will need to install some libraries beforehand. Run the following command to install the necessary libraries:
 
 ```
 npm i
@@ -24,7 +40,7 @@ This will install the libraries specified in the `package.json` file, which are 
 
 ## Deployment 📦⚙️
 
-To start the app, run the following code in the terminal:
+3. To start the app, run the following code in the terminal:
 
 ```
 npm run dev
